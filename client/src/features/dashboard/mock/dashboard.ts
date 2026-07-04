@@ -97,3 +97,38 @@ export const mockAttendanceRates = [
   { day: 'Thu', rate: 95 },
   { day: 'Fri', rate: 91 },
 ]
+
+export const mockEmployeeGrowth = [
+  { month: 'Jan', count: 110 },
+  { month: 'Feb', count: 112 },
+  { month: 'Mar', count: 115 },
+  { month: 'Apr', count: 118 },
+  { month: 'May', count: 121 },
+  { month: 'Jun', count: 124 },
+]
+
+export const mockPayrollSummary = [
+  { month: 'Jan', amount: 135000 },
+  { month: 'Feb', amount: 138000 },
+  { month: 'Mar', amount: 140000 },
+  { month: 'Apr', amount: 142000 },
+  { month: 'May', amount: 143500 },
+  { month: 'Jun', amount: 145200 },
+]
+
+export const mockUpcomingHolidays = [
+  { date: '2026-07-04', name: 'Independence Day', type: 'Federal' },
+  { date: '2026-09-07', name: 'Labor Day', type: 'Public' },
+  { date: '2026-11-26', name: 'Thanksgiving', type: 'Public' },
+]
+
+export const mockTodayBirthdays = [
+  { name: 'Sarah Connor', department: 'Operations', date: 'Today', avatar: 'SC' },
+  { name: 'Michael Scott', department: 'Sales', date: 'Tomorrow', avatar: 'MS' },
+]
+
+export const mockRecentActivities = [
+  { id: '1', user: 'Bob Miller', action: 'checked in', time: '10 mins ago', type: 'attendance' },
+  { id: '2', user: 'Jane Smith', action: 'uploaded document', time: '1 hour ago', type: 'document' },
+  { id: '3', user: 'Emily Davis', action: 'submitted annual leave request', time: '3 hours ago', type: 'leave' },
+]
