@@ -10,10 +10,12 @@ import { ROUTES } from '@/utils/routes'
 interface LeaveFormProps {
   onSubmit: (data: LeaveInput) => void
   isSubmitting?: boolean
+  cancelPath?: string
 }
 
-export default function LeaveForm({ onSubmit, isSubmitting }: LeaveFormProps) {
+export default function LeaveForm({ onSubmit, isSubmitting, cancelPath }: LeaveFormProps) {
   const navigate = useNavigate()
+  const backPath = cancelPath ?? ROUTES.EMPLOYEE.LEAVE
   const {
     register,
     handleSubmit,
@@ -69,7 +71,7 @@ export default function LeaveForm({ onSubmit, isSubmitting }: LeaveFormProps) {
         <Button
           type="button"
           variant="outline"
-          onClick={() => navigate(ROUTES.ADMIN.LEAVE)}
+          onClick={() => navigate(backPath)}
           disabled={isSubmitting}
         >
           Cancel

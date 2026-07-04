@@ -78,7 +78,7 @@ const mockPayroll: PayrollRecord[] = [
   },
 ]
 
-export default function Payroll() {
+export default function AdminPayrollPage() {
   const [search, setSearch] = useState('')
   const [records, setRecords] = useState<PayrollRecord[]>(mockPayroll)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -126,7 +126,7 @@ export default function Payroll() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <SectionHeader
           title="Payroll Management"
-          description="Process compensation, track disbursements history, allowances, and deductions calculations"
+          description="Process compensation, track disbursements history, allowances, and deductions calculations across all employees."
         />
         {pendingCount > 0 && (
           <Button
@@ -142,7 +142,7 @@ export default function Payroll() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
+          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-955/30 dark:text-blue-400">
             <DollarSign className="h-6 w-6" />
           </div>
           <div>
@@ -152,7 +152,7 @@ export default function Payroll() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400">
+          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-955/30 dark:text-green-400">
             <Users className="h-6 w-6" />
           </div>
           <div>
@@ -162,7 +162,7 @@ export default function Payroll() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
+          <div className="p-3 rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-955/30 dark:text-amber-400">
             <ClipboardCheck className="h-6 w-6" />
           </div>
           <div>
@@ -172,7 +172,7 @@ export default function Payroll() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-indigo-50 text-indigo-650 dark:bg-indigo-950/40 dark:text-indigo-400">
+          <div className="p-3 rounded-lg bg-indigo-50 text-indigo-650 dark:bg-indigo-955/30 dark:text-indigo-400">
             <Calendar className="h-6 w-6" />
           </div>
           <div>

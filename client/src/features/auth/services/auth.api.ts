@@ -4,15 +4,16 @@ import type { LoginInput, RegisterInput, AuthResponse } from '../types'
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export async function login(data: LoginInput): Promise<AuthResponse> {
-  await delay(1000)
+  await delay(800)
+  const isAdmin = data.email.toLowerCase().includes('admin')
   return {
     user: {
-      id: 'mock-user-id-123',
-      fullName: 'John Doe',
+      id: isAdmin ? 'admin-001' : 'emp-042',
+      fullName: isAdmin ? 'John Doe' : 'Jane Smith',
       email: data.email,
-      phoneNumber: '+1234567890',
-      employeeId: 'EMP-001',
-      role: 'admin',
+      phoneNumber: isAdmin ? '+1 555-0100' : '+1 555-0142',
+      employeeId: isAdmin ? 'EMP-2026-0001' : 'EMP-2026-0042',
+      role: isAdmin ? 'admin' : 'employee',
     },
     token: 'mock-jwt-token-xyz',
   }

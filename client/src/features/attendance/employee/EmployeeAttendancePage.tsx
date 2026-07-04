@@ -9,7 +9,7 @@ import AttendanceCalendar from '../components/AttendanceCalendar'
 import { getAttendanceLogs, checkIn, checkOut } from '../services/attendance.api'
 import type { AttendanceRecord } from '../types'
 
-export default function AttendancePage() {
+export default function EmployeeAttendancePage() {
   const [logs, setLogs] = useState<AttendanceRecord[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'overview' | 'calendar'>('overview')
@@ -84,8 +84,8 @@ export default function AttendancePage() {
   return (
     <div className="space-y-6">
       <SectionHeader
-        title="Attendance Management"
-        description="Track daily check-ins, working hours, and review monthly attendance logs."
+        title="My Attendance"
+        description="Track your daily work hours, check in/out and review your monthly log."
         actions={headerActions}
       />
 

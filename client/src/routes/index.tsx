@@ -8,18 +8,28 @@ import EmployeeLayout from '@/layouts/EmployeeLayout'
 // Pages
 import Login from '@/features/auth/pages/LoginPage'
 import Register from '@/features/auth/pages/RegisterPage'
-import DashboardPage from '@/features/dashboard/pages/DashboardPage'
+
+// Admin Pages
+import AdminDashboardPage from '@/features/dashboard/pages/AdminDashboardPage'
 import EmployeeListPage from '@/features/employee/pages/EmployeeListPage'
 import EmployeeDetailsPage from '@/features/employee/pages/EmployeeDetailsPage'
 import EmployeeFormPage from '@/features/employee/pages/EmployeeFormPage'
-import AttendancePage from '@/features/attendance/pages/AttendancePage'
-import LeavePage from '@/features/leave/pages/LeavePage'
-import ApplyLeavePage from '@/features/leave/pages/ApplyLeavePage'
+import AdminAttendancePage from '@/features/attendance/admin/AdminAttendancePage'
+import AdminLeavePage from '@/features/leave/admin/AdminLeavePage'
+import AdminPayrollPage from '@/features/payroll/admin/AdminPayrollPage'
+import AdminDocumentsPage from '@/features/documents/admin/AdminDocumentsPage'
+import AdminNotificationsPage from '@/features/notifications/admin/AdminNotificationsPage'
+import AdminProfilePage from '@/features/profile/admin/AdminProfilePage'
 
-import Payroll from '@/pages/Payroll'
-import Documents from '@/pages/Documents'
-import Notifications from '@/pages/Notifications'
-import Profile from '@/pages/Profile'
+// Employee Pages
+import EmployeeDashboardPage from '@/features/dashboard/pages/EmployeeDashboardPage'
+import EmployeeAttendancePage from '@/features/attendance/employee/EmployeeAttendancePage'
+import EmployeeLeavePage from '@/features/leave/employee/EmployeeLeavePage'
+import EmployeePayslipPage from '@/features/payroll/employee/EmployeePayslipPage'
+import EmployeeDocumentsPage from '@/features/documents/employee/EmployeeDocumentsPage'
+import EmployeeNotificationsPage from '@/features/notifications/employee/EmployeeNotificationsPage'
+import EmployeeProfilePage from '@/features/profile/employee/EmployeeProfilePage'
+
 import Unauthorized from '@/pages/Unauthorized'
 import NotFound from '@/pages/NotFound'
 
@@ -51,7 +61,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: <AdminDashboardPage />,
       },
       {
         path: 'employees',
@@ -76,36 +86,27 @@ export const router = createBrowserRouter([
       },
       {
         path: 'attendance',
-        element: <AttendancePage />,
+        element: <AdminAttendancePage />,
       },
       {
         path: 'leave',
-        children: [
-          {
-            path: '',
-            element: <LeavePage />,
-          },
-          {
-            path: 'apply',
-            element: <ApplyLeavePage />,
-          },
-        ],
+        element: <AdminLeavePage />,
       },
       {
         path: 'payroll',
-        element: <Payroll />,
+        element: <AdminPayrollPage />,
       },
       {
         path: 'documents',
-        element: <Documents />,
+        element: <AdminDocumentsPage />,
       },
       {
         path: 'notifications',
-        element: <Notifications />,
+        element: <AdminNotificationsPage />,
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <AdminProfilePage />,
       },
     ],
   },
@@ -119,40 +120,40 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <DashboardPage />,
+        element: <EmployeeDashboardPage />,
       },
       {
         path: 'attendance',
-        element: <AttendancePage />,
+        element: <EmployeeAttendancePage />,
       },
       {
         path: 'leave',
         children: [
           {
             path: '',
-            element: <LeavePage />,
+            element: <EmployeeLeavePage />,
           },
           {
             path: 'apply',
-            element: <ApplyLeavePage />,
+            element: <EmployeeLeavePage />,
           },
         ],
       },
       {
         path: 'payroll',
-        element: <Payroll />,
+        element: <EmployeePayslipPage />,
       },
       {
         path: 'documents',
-        element: <Documents />,
+        element: <EmployeeDocumentsPage />,
       },
       {
         path: 'notifications',
-        element: <Notifications />,
+        element: <EmployeeNotificationsPage />,
       },
       {
         path: 'profile',
-        element: <Profile />,
+        element: <EmployeeProfilePage />,
       },
     ],
   },
@@ -165,4 +166,5 @@ export const router = createBrowserRouter([
     element: <NotFound />,
   },
 ])
+
 

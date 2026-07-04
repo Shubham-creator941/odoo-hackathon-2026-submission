@@ -1,35 +1,39 @@
 export const mockDashboardMetrics = [
   {
-    title: 'Total Employees',
-    value: 124,
-    icon: 'Users',
-    trendValue: '+8.4%',
-    trendType: 'up',
-    description: 'vs last month',
+    title: 'Pending Leave Approvals',
+    value: 6,
+    icon: 'CalendarX',
+    trendValue: '2 urgent',
+    trendType: 'down',
+    description: 'awaiting review',
+    link: '/admin/leave',
   },
   {
-    title: 'Present Today',
+    title: 'Employees Present',
     value: '112/124',
     icon: 'CalendarCheck',
     trendValue: '90.3%',
     trendType: 'neutral',
-    description: 'attendance rate',
+    description: 'attendance today',
+    link: '/admin/attendance',
   },
   {
-    title: 'Pending Leaves',
-    value: 6,
-    icon: 'CalendarX',
-    trendValue: '-15%',
-    trendType: 'down',
-    description: 'vs last week',
-  },
-  {
-    title: 'Upcoming Payroll',
+    title: 'Payroll Due',
     value: '$145,200',
     icon: 'DollarSign',
-    trendValue: 'Scheduled',
+    trendValue: 'Jul 30',
     trendType: 'neutral',
-    description: 'on 30th July',
+    description: 'next run scheduled',
+    link: '/admin/payroll',
+  },
+  {
+    title: 'Employees On Leave',
+    value: 4,
+    icon: 'Users',
+    trendValue: 'Today',
+    trendType: 'neutral',
+    description: 'out of office',
+    link: '/admin/leave',
   },
 ]
 
@@ -128,7 +132,7 @@ export const mockTodayBirthdays = [
 ]
 
 export const mockRecentActivities = [
-  { id: '1', user: 'Bob Miller', action: 'checked in', time: '10 mins ago', type: 'attendance' },
-  { id: '2', user: 'Jane Smith', action: 'uploaded document', time: '1 hour ago', type: 'document' },
-  { id: '3', user: 'Emily Davis', action: 'submitted annual leave request', time: '3 hours ago', type: 'leave' },
+  { id: '1', user: 'Bob Miller', action: 'checked in', time: '10 mins ago', type: 'attendance', link: '/admin/attendance' },
+  { id: '2', user: 'Jane Smith', action: 'uploaded document', time: '1 hour ago', type: 'document', link: '/admin/documents' },
+  { id: '3', user: 'Emily Davis', action: 'submitted annual leave request', time: '3 hours ago', type: 'leave', link: '/admin/leave' },
 ]

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Card from '@/components/ui/Card'
 import { CalendarCheck, FileText, CalendarX, Activity } from 'lucide-react'
 
@@ -7,6 +8,7 @@ interface ActivityItem {
   action: string
   time: string
   type: string
+  link?: string
 }
 
 interface RecentActivitiesProps {
@@ -58,16 +60,25 @@ export default function RecentActivities({ activities, isLoading }: RecentActivi
           {activities.map((item) => {
             const IconComponent = getIcon(item.type)
             return (
-              <div key={item.id} className="relative">
+              <div key={item.id} className="relative flex items-start">
                 {/* Timeline node dot */}
                 <div className={`absolute -left-[35px] top-1 p-1 rounded-full border border-border-app bg-white dark:bg-slate-900 ${getColor(item.type)}`}>
                   <IconComponent className="h-3.5 w-3.5" />
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                    <span className="font-bold text-slate-900 dark:text-white">{item.user}</span>{' '}
-                    {item.action}
-                  </p>
+                <div className="flex-1">
+                  {item.link ? (
+                    <Link to={item.link} className="hover:text-blue-650 dark:hover:text-blue-400 transition-colors">
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                        <span className="font-bold text-slate-900 dark:text-white">{item.user}</span>{' '}
+                        {item.action}
+                      </p>
+                    </Link>
+                  ) : (
+                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                      <span className="font-bold text-slate-900 dark:text-white">{item.user}</span>{' '}
+                      {item.action}
+                    </p>
+                  )}
                   <p className="text-xs text-text-muted mt-1 font-medium">{item.time}</p>
                 </div>
               </div>

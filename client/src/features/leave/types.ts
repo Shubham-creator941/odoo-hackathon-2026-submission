@@ -8,6 +8,12 @@ export interface LeaveRequest {
   status: 'Pending' | 'Approved' | 'Rejected'
   reason: string
   remarks?: string
+  employeeName?: string
+  employeeId?: string
+  department?: string
+  manager?: string
+  supportingDocuments?: string[]
+  resolvedDate?: string
 }
 
 export interface LeaveBalance {
