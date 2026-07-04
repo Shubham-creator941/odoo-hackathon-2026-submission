@@ -8,7 +8,7 @@ export default function EmployeeLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
+    <div className="flex h-screen w-screen overflow-hidden bg-bg-app">
       <Sidebar
         type="employee"
         isOpen={sidebarOpen}

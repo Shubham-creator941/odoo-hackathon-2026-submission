@@ -1,2 +1,34 @@
 @import "tailwindcss";
 
+@variant dark (.dark &);
+
+@theme {
+  --color-bg-app: var(--bg-app);
+  --color-card-app: var(--card-app);
+  --color-border-app: var(--border-app);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+}
+
+:root {
+  --bg-app: #f9fafb; /* Gray 50 */
+  --card-app: #ffffff; /* White */
+  --border-app: #e5e7eb; /* Gray 200 */
+  --text-main: #0f172a; /* Slate 900 */
+  --text-muted: #475569; /* Slate 600 */
+}
+
+.dark {
+  --bg-app: #020617; /* Slate 950 */
+  --card-app: #0f172a; /* Slate 900 */
+  --border-app: #1e293b; /* Slate 800 */
+  --text-main: #f8fafc; /* Slate 50 */
+  --text-muted: #94a3b8; /* Slate 400 */
+}
+
+/* Smooth transitions */
+body, main, header, aside, .card, table, tr, th, td, input, select, textarea, button {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}

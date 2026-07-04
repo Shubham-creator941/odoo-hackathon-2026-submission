@@ -110,6 +110,8 @@ export default function LeavePage() {
         currentPage={activePage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
+        totalItems={filteredLeaves.length}
+        itemsPerPage={itemsPerPage}
       />
     </div>
   )

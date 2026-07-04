@@ -1,4 +1,5 @@
-import { type InputHTMLAttributes, forwardRef } from 'react'
+import type { InputHTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/utils'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,10 +12,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex h-10 w-full rounded-lg border bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-900 dark:ring-offset-slate-950",
+          "flex h-10 w-full rounded-lg border bg-white px-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-900 dark:focus-visible:ring-blue-500",
           error
-            ? "border-red-600 focus-visible:ring-red-600"
-            : "border-slate-200 focus-visible:ring-blue-600 dark:border-slate-800",
+            ? "border-red-500 focus-visible:ring-red-500"
+            : "border-border-app focus-visible:ring-blue-600",
           className
         )}
         ref={ref}

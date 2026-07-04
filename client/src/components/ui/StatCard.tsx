@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
+import Card from './Card'
 import { cn } from '@/utils'
 
 interface StatCardProps {
@@ -22,7 +23,7 @@ export default function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <div className={cn("rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900", className)}>
+    <Card hoverEffect className={className}>
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
           {title}
@@ -42,8 +43,8 @@ export default function StatCard({
                 className={cn(
                   "text-xs font-semibold px-1.5 py-0.5 rounded",
                   trend.type === 'up' && "bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-400",
-                  trend.type === 'down' && "bg-red-50 text-red-700 dark:bg-red-950/30 dark:text-red-400",
-                  trend.type === 'neutral' && "bg-slate-50 text-slate-700 dark:bg-slate-850 dark:text-slate-400"
+                  trend.type === 'down' && "bg-red-55 text-red-700 dark:bg-red-950/30 dark:text-red-400",
+                  trend.type === 'neutral' && "bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-400"
                 )}
               >
                 {trend.value}
@@ -57,6 +58,6 @@ export default function StatCard({
           </div>
         )}
       </div>
-    </div>
+    </Card>
   )
 }

@@ -100,6 +100,8 @@ export default function EmployeeListPage() {
         currentPage={activePage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
+        totalItems={filteredEmployees.length}
+        itemsPerPage={itemsPerPage}
       />
     </div>
   )
