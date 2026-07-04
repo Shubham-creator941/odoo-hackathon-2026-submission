@@ -6,8 +6,8 @@ import AdminLayout from '@/layouts/AdminLayout'
 import EmployeeLayout from '@/layouts/EmployeeLayout'
 
 // Pages
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
+import Login from '@/features/auth/pages/LoginPage'
+import Register from '@/features/auth/pages/RegisterPage'
 import Dashboard from '@/pages/Dashboard'
 import Employees from '@/pages/Employees'
 import Attendance from '@/pages/Attendance'
