@@ -6,13 +6,17 @@ import Footer from '@/components/layout/Footer'
 import Breadcrumb from '@/components/layout/Breadcrumb'
 import ContentContainer from '@/components/layout/ContentContainer'
 
-export default function EmployeeLayout() {
+interface AppLayoutProps {
+  type: 'admin' | 'employee'
+}
+
+export default function AppLayout({ type }: AppLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-bg-app">
       <Sidebar
-        type="employee"
+        type={type}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
@@ -32,4 +36,3 @@ export default function EmployeeLayout() {
     </div>
   )
 }
-

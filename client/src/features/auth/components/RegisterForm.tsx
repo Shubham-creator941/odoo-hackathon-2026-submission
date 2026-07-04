@@ -8,6 +8,7 @@ import FormField from '@/components/ui/FormField'
 import Input from '@/components/ui/Input'
 import PasswordInput from '@/components/ui/PasswordInput'
 import Checkbox from '@/components/ui/Checkbox'
+import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
 
 export default function RegisterForm() {
@@ -37,9 +38,8 @@ export default function RegisterForm() {
         description: `Welcome aboard, ${response.user.fullName}! Please log in.`,
       })
       navigate('/login')
-    } catch (err) {
+    } catch {
       toast.error('Registration failed. Please check the details and try again.')
-      console.error(err)
     }
   }
 
@@ -81,15 +81,14 @@ export default function RegisterForm() {
       </div>
 
       <FormField label="Role" error={errors.role?.message} required>
-        <select
-          className={`flex h-10 w-full rounded-lg border bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:bg-slate-900 dark:border-slate-800 ${
-            errors.role ? 'border-red-600 focus-visible:ring-red-600' : 'border-slate-200'
-          }`}
+        <Select
+          options={[
+            { label: 'Employee', value: 'employee' },
+            { label: 'Admin', value: 'admin' },
+          ]}
+          error={!!errors.role}
           {...register('role')}
-        >
-          <option value="employee">Employee</option>
-          <option value="admin">Admin</option>
-        </select>
+        />
       </FormField>
 
       <FormField label="Password" error={errors.password?.message} required>

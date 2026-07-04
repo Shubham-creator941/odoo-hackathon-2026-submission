@@ -18,7 +18,7 @@ import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
-import { mockEmployeeNotifications, type NotificationItem } from '@/features/notification/mock/notifications'
+import { mockEmployeeNotifications, type NotificationItem } from '../mock/notifications'
 
 export default function EmployeeNotificationsPage() {
   const baseRoute = '/employee'

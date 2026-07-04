@@ -7,7 +7,7 @@ import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
-import { mockDocuments, type DocumentItem } from '@/features/document/mock/documents'
+import { mockDocuments, type DocumentItem } from '../mock/documents'
 
 export default function AdminDocumentsPage() {
   const [documents, setDocuments] = useState<DocumentItem[]>(mockDocuments)

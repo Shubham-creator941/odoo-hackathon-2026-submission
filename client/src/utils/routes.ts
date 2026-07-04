@@ -11,12 +11,10 @@ export const ROUTES = {
     EMPLOYEES_EDIT: (id: string) => `/admin/employees/${id}/edit`,
     ATTENDANCE: '/admin/attendance',
     LEAVE: '/admin/leave',
-    LEAVE_APPLY: '/admin/leave/apply',
     PAYROLL: '/admin/payroll',
     DOCUMENTS: '/admin/documents',
     NOTIFICATIONS: '/admin/notifications',
     PROFILE: '/admin/profile',
-    SETTINGS: '/admin/settings',
   },
   EMPLOYEE: {
     DASHBOARD: '/employee/dashboard',
@@ -27,6 +25,5 @@ export const ROUTES = {
     DOCUMENTS: '/employee/documents',
     NOTIFICATIONS: '/employee/notifications',
     PROFILE: '/employee/profile',
-    SETTINGS: '/employee/settings',
   },
 } as const

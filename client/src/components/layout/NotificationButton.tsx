@@ -73,6 +73,8 @@ export default function NotificationButton() {
           showNotifications && "bg-slate-100 dark:bg-slate-800"
         )}
         aria-label="View Notifications"
+        aria-expanded={showNotifications}
+        aria-haspopup="true"
       >
         <Bell className="h-5 w-5" />
         <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-900 animate-pulse" />

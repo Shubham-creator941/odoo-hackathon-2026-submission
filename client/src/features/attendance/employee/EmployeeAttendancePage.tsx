@@ -21,8 +21,8 @@ export default function EmployeeAttendancePage() {
       try {
         const data = await getAttendanceLogs()
         setLogs(data)
-      } catch (err) {
-        console.error(err)
+      } catch {
+        // data load failed silently — user sees empty state
       } finally {
         setIsLoading(false)
       }

@@ -30,6 +30,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
             type="text"
             placeholder="Quick search (Ctrl + K)..."
             className="pl-9 text-xs"
+            aria-label="Global search"
           />
         </div>
       </div>

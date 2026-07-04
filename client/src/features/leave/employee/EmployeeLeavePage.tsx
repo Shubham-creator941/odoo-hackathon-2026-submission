@@ -33,8 +33,8 @@ export default function EmployeeLeavePage() {
           setBalances(b)
           setMyLeaves(l)
         }
-      } catch (err) {
-        console.error(err)
+      } catch {
+        // data load failed silently — user sees empty state
       } finally {
         if (active) {
           setIsLoading(false)
