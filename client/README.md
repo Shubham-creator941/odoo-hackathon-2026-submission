@@ -1,32 +1,17 @@
-# React + TypeScript + Vite
+# HRMS Portal Client Workspace
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This directory contains the frontend user interface for the Odoo-inspired HRMS (Human Resource Management System) application.
 
-Currently, two official plugins are available:
+## Portals Separation Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The application is structured into two completely independent portals using React, TypeScript, Vite, and Tailwind CSS:
 
-## React Compiler
+1. **Admin Portal**: Accessible via `/admin`. Contains organizational headcount controls, timesheet monitors, leave approvals, company payrolls processing, compliance documents verification, and administrative settings.
+2. **Employee Portal**: Accessible via `/employee`. Contains employee self-service tools, check-in/out consoles, personal leaves application, monthly payslip downloads, documents vault, and emergency coordinates.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Reusable UI Design Language
+All screens build upon a shared component library:
+- **Buttons & Badges**: Standardized states and interactive scales.
+- **Card layouts & Tables**: Consistent border-radii, spacing, scroll wrappers, and dark mode contrasts.
+- **Forms**: Checked and validated client-side with React Hook Form + Zod.
+- **Loaders & Skeletons**: Standardized loading placeholders.
