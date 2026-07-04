@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  employeeCode  String   @unique @map("employee_code")
+  email         String   @unique
+  passwordHash  String   @map("password_hash")
+  role          String   // 'admin' | 'employee'
+  isVerified    Boolean  @default(false) @map("is_verified")
+  verifyCode    String?  @map("verify_code")
+  status        String   @default("inactive")
+  
+  // Employee Details
+  fullName      String?  @map("full_name")
+  phoneNumber   String?  @map("phone_number")
+  department    String?
+  designation   String?
+  joiningDate   DateTime? @map("joining_date")
+  managerId     String?  @map("manager_id")
+  address       String?
+  city          String?
+  bankName      String?  @map("bank_name")
+  bankAccount   String?  @map("bank_account")
+  
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  attendances   Attendance[]
+  leaves        Leave[]
+  payrolls      Payroll[]
+  documents     Document[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model Attendance {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  date         DateTime
+  checkIn      String?  @map("check_in")
+  checkOut     String?  @map("check_out")
+  workingHours String?  @map("working_hours")
+  status       String   // Present, Absent, Late, Half Day
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("attendances")
+}
+
+model Leave {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  leaveType    String   @map("leave_type") // Annual Leave, Sick Leave, Casual Leave
+  startDate    DateTime @map("start_date")
+  endDate      DateTime @map("end_date")
+  duration     String
+  appliedDate  DateTime @default(now()) @map("applied_date")
+  status       String   @default("Pending") // Pending, Approved, Rejected
+  reason       String
+  remarks      String?
+  managerId    String?  @map("manager_id")
+  resolvedDate DateTime? @map("resolved_date")
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("leaves")
+}
+
+model Payroll {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  basicSalary  Float    @map("basic_salary")
+  allowances   Float    @default(0)
+  deductions   Float    @default(0)
+  netPay       Float    @map("net_pay")
+  status       String   @default("Pending") // Paid, Scheduled, Pending
+  payDate      DateTime @map("pay_date")
+  period       String
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("payrolls")
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  documentName String   @map("document_name")
+  category     String   // Tax Document, Contract, Benefits, Identity, Legal
+  uploadDate   DateTime @default(now()) @map("upload_date")
+  expiryDate   DateTime? @map("expiry_date")
+  status       String   @default("Pending") // Verified, Pending, Rejected, Expired
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("documents")
+}
+
+model Notification {
+  id           String   @id @default(uuid())
+  userId       String?  @map("user_id") // Nullable for global announcements
+  title        String
+  message      String
+  category     String   // System, Leave, Attendance, Payroll, Documents, Announcements
+  priority     String   @default("Medium") // High, Medium, Low
+  read         Boolean  @default(false)
+  
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}

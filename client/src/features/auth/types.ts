@@ -8,6 +8,9 @@ export interface User {
   phoneNumber: string
   employeeId: string
   role: 'employee' | 'admin'
+  employeeCode?: string
+  is_verified?: boolean
+  status?: string
 }
 
 export interface AuthResponse {

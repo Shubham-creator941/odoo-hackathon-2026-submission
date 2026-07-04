@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { registerSchema, type RegisterInput } from '../schemas/register.schema'
 import { register as registerUser } from '../services/auth.api'
@@ -10,9 +11,10 @@ import PasswordInput from '@/components/ui/PasswordInput'
 import Checkbox from '@/components/ui/Checkbox'
 import Select from '@/components/ui/Select'
 import Button from '@/components/ui/Button'
+import VerifyCodeForm from './VerifyCodeForm'
 
 export default function RegisterForm() {
-  const navigate = useNavigate()
+  const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
@@ -33,14 +35,28 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: RegisterInput) => {
     try {
+      // Store local fields that backend doesn't persist
+      const extraKey = `hrms-auth-extra-${data.email}`
+      localStorage.setItem(extraKey, JSON.stringify({
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber
+      }))
+      
       const response = await registerUser(data)
       toast.success('Registration successful!', {
-        description: `Welcome aboard, ${response.user.fullName}! Please log in.`,
+        description: `Welcome aboard, ${data.fullName}! Verification code: ${response.user.verify_code}`,
+        duration: 10000,
       })
-      navigate('/login')
-    } catch {
-      toast.error('Registration failed. Please check the details and try again.')
+      setRegisteredEmail(data.email)
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { error?: string } } }
+      const message = err.response?.data?.error || 'Registration failed. Please check the details and try again.'
+      toast.error(message)
     }
+  }
+
+  if (registeredEmail) {
+    return <VerifyCodeForm email={registeredEmail} />
   }
 
   return (

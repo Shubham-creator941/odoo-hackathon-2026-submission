@@ -15,7 +15,7 @@ import { cn } from '@/utils'
 
 export default function LoginForm() {
   const navigate = useNavigate()
-  const { loginAs } = useAuth()
+  const { login } = useAuth()
   const [selectedRole, setSelectedRole] = useState<'admin' | 'employee'>('admin')
 
   const {
@@ -32,24 +32,28 @@ export default function LoginForm() {
     },
   })
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: LoginInput) => {
     try {
-      loginAs(selectedRole)
+      const user = await login({ email: data.email, password: data.password })
+      const actualRole = user.role
+      
       toast.success(
-        selectedRole === 'admin' ? 'Welcome, Admin!' : 'Welcome back!',
+        actualRole === 'admin' ? 'Welcome, Admin!' : 'Welcome back!',
         {
-          description: selectedRole === 'admin'
+          description: actualRole === 'admin'
             ? 'Signed in to the Admin Portal.'
             : 'Signed in to the Employee Portal.',
         }
       )
       navigate(
-        selectedRole === 'admin'
+        actualRole === 'admin'
           ? ROUTES.ADMIN.DASHBOARD
           : ROUTES.EMPLOYEE.DASHBOARD
       )
-    } catch {
-      toast.error('Authentication failed. Please check your credentials.')
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { error?: string } } }
+      const message = err.response?.data?.error || 'Authentication failed. Please check your credentials.'
+      toast.error(message)
     }
   }
 

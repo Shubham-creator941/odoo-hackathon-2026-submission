@@ -13,7 +13,7 @@ export const api = axios.create({
 // Request Interceptor: Attach JWT tokens
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('hrms-token')
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -33,7 +33,7 @@ api.interceptors.response.use(
 
     if (status === 401) {
       toast.error('Session Expired', { description: 'Please log in again.' })
-      localStorage.removeItem('token')
+      localStorage.removeItem('hrms-token')
     } else if (status === 403) {
       toast.error('Access Forbidden', { description: message })
     } else if (status >= 500) {
