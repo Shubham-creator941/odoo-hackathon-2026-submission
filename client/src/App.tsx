@@ -1,10 +1,21 @@
-import React from 'react';
+import { RouterProvider } from 'react-router-dom'
+import { ThemeProvider } from '@/context/ThemeContext'
+import { AuthProvider } from '@/context/AuthContext'
+import { Toaster } from 'sonner'
+import { router } from './routes'
 
-export default function App() {
+function App() {
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', padding: '2rem', textAlign: 'center' }}>
-      <h1>Odoo Hackathon 2026 Submission</h1>
-      <p>Initial frontend structure initialized.</p>
-    </div>
-  );
+    <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster richColors />
+      </AuthProvider>
+    </ThemeProvider>
+  )
 }
+
+export default App
+
+
+
