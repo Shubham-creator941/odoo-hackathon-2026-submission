@@ -12,8 +12,8 @@ export default function AuthLayout() {
           <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             HRMS Portal
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Enter your credentials to access your account
+          <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-1">
+            Manage HR operations or access your employee workspace.
           </p>
         </div>
         <Outlet />

@@ -3,7 +3,7 @@ export interface NotificationItem {
   title: string
   message: string
   timestamp: string
-  category: 'System' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents'
+  category: 'System' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents' | 'Announcements'
   priority: 'High' | 'Medium' | 'Low'
   read: boolean
 }
@@ -64,3 +64,79 @@ export const mockNotifications: NotificationItem[] = [
     read: false,
   },
 ]
+
+export const mockEmployeeNotifications: NotificationItem[] = [
+  {
+    id: 'emp-n1',
+    title: 'Leave Request Approved',
+    message: 'Your request for 3 days of Annual Leave starting on July 10th has been approved by Sarah Chen.',
+    timestamp: 'Today, 10:30 AM',
+    category: 'Leave',
+    priority: 'High',
+    read: false,
+  },
+  {
+    id: 'emp-n2',
+    title: 'Salary Credited',
+    message: 'Your monthly salary for June 2026 has been successfully credited to your bank account.',
+    timestamp: 'Today, 09:00 AM',
+    category: 'Payroll',
+    priority: 'High',
+    read: false,
+  },
+  {
+    id: 'emp-n3',
+    title: 'Attendance Reminder',
+    message: "Please don't forget to punch out at the end of your shift today.",
+    timestamp: 'Today, 08:00 AM',
+    category: 'Attendance',
+    priority: 'Medium',
+    read: false,
+  },
+  {
+    id: 'emp-n4',
+    title: 'Company Announcement',
+    message: 'Join us for the town hall meeting tomorrow at 3 PM in the main conference room.',
+    timestamp: 'Yesterday, 02:15 PM',
+    category: 'Announcements',
+    priority: 'Medium',
+    read: true,
+  },
+  {
+    id: 'emp-n5',
+    title: 'Payslip Generated',
+    message: 'Your payslip for the period ending June 30, 2026, is now available for download.',
+    timestamp: 'Yesterday, 10:00 AM',
+    category: 'Payroll',
+    priority: 'Low',
+    read: true,
+  },
+  {
+    id: 'emp-n6',
+    title: 'Document Upload Verified',
+    message: 'Your uploaded W-4 Tax Form has been verified and approved by the HR department.',
+    timestamp: '2 days ago',
+    category: 'Documents',
+    priority: 'Medium',
+    read: true,
+  },
+  {
+    id: 'emp-n7',
+    title: 'Holiday Announcement',
+    message: 'The office will be closed on Friday, July 4th, in observance of Independence Day.',
+    timestamp: '3 days ago',
+    category: 'Announcements',
+    priority: 'High',
+    read: true,
+  },
+  {
+    id: 'emp-n8',
+    title: 'Password Changed',
+    message: "Your account password was successfully updated. If this wasn't you, contact security.",
+    timestamp: '4 days ago',
+    category: 'System',
+    priority: 'High',
+    read: true,
+  },
+]
+

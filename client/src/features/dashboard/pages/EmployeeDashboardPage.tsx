@@ -15,7 +15,7 @@ import Badge from '@/components/ui/Badge'
 import StatCard from '@/components/ui/StatCard'
 import QuickActions from '../components/QuickActions'
 import { getLeaveBalances, getEmployeeLeaves } from '@/features/leave/services/leave.api'
-import { mockNotifications } from '@/features/notification/mock/notifications'
+import { mockEmployeeNotifications } from '@/features/notification/mock/notifications'
 import { mockDocuments } from '@/features/document/mock/documents'
 import { mockUpcomingHolidays } from '../mock/dashboard'
 import { ROUTES } from '@/utils/routes'
@@ -44,7 +44,7 @@ export default function EmployeeDashboardPage() {
   }, [user?.employeeId])
 
   const nextHoliday = mockUpcomingHolidays[0]
-  const recentNotifications = mockNotifications.slice(0, 3)
+  const recentNotifications = mockEmployeeNotifications.slice(0, 3)
   const myDocuments = mockDocuments.filter((d) => d.employeeName === 'Jane Smith').slice(0, 3)
 
   return (

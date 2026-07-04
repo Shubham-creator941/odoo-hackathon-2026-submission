@@ -10,27 +10,27 @@ import {
   FileText,
   Check,
   Trash2,
-  ArrowRight
+  ArrowRight,
+  Megaphone
 } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
-import { mockNotifications, type NotificationItem } from '@/features/notification/mock/notifications'
+import { mockEmployeeNotifications, type NotificationItem } from '@/features/notification/mock/notifications'
 
 export default function EmployeeNotificationsPage() {
   const baseRoute = '/employee'
   
-  // Filter out any notification that's admin-only (e.g. system anomalies or payroll updates if we want, or keep it, but make sure they route to employee paths)
-  const [notifications, setNotifications] = useState<NotificationItem[]>(mockNotifications)
-  const [filter, setFilter] = useState<'All' | 'Unread' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents' | 'System'>('All')
+  const [notifications, setNotifications] = useState<NotificationItem[]>(mockEmployeeNotifications)
+  const [filter, setFilter] = useState<'All' | 'Unread' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents' | 'Announcements' | 'System'>('All')
 
   // Stats derivation
   const unreadCount = notifications.filter((n) => !n.read).length
   const todayCount = notifications.filter((n) => n.timestamp.startsWith('Today')).length
-  const systemCount = notifications.filter((n) => n.category === 'System').length
-  const priorityHighCount = notifications.filter((n) => n.priority === 'High').length
+  const documentsCount = notifications.filter((n) => n.category === 'Documents').length
+  const pendingActionsCount = notifications.filter((n) => !n.read && n.priority === 'High').length
 
   // Filter logic
   const filteredList = notifications.filter((item) => {
@@ -51,6 +51,8 @@ export default function EmployeeNotificationsPage() {
         return DollarSign
       case 'Documents':
         return FileText
+      case 'Announcements':
+        return Megaphone
       default:
         return Bell
     }
@@ -68,6 +70,8 @@ export default function EmployeeNotificationsPage() {
         return 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-955/20'
       case 'Documents':
         return 'text-purple-600 bg-purple-50 dark:text-purple-400 dark:bg-purple-955/20'
+      case 'Announcements':
+        return 'text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-955/20'
       default:
         return 'text-slate-600 bg-slate-50 dark:text-slate-400 dark:bg-slate-800/40'
     }
@@ -114,6 +118,7 @@ export default function EmployeeNotificationsPage() {
         return `${baseRoute}/payroll`
       case 'Documents':
         return `${baseRoute}/documents`
+      case 'Announcements':
       case 'System':
       default:
         return `${baseRoute}/dashboard`
@@ -123,13 +128,15 @@ export default function EmployeeNotificationsPage() {
   const getActionLabel = (category: string) => {
     switch (category) {
       case 'Leave':
-        return 'View My Leaves'
+        return 'View Leave'
       case 'Attendance':
-        return 'View My Attendance'
+        return 'Open Attendance'
       case 'Payroll':
-        return 'View My Payslip'
+        return 'View Payslip'
       case 'Documents':
-        return 'Open My Documents'
+        return 'View Document'
+      case 'Announcements':
+        return 'Open Announcement'
       case 'System':
       default:
         return 'View My Dashboard'
@@ -161,7 +168,7 @@ export default function EmployeeNotificationsPage() {
             <Bell className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">Unread Alerts</p>
+            <p className="text-xs font-semibold text-text-muted">Unread Notifications</p>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{unreadCount}</h4>
           </div>
         </Card>
@@ -171,18 +178,18 @@ export default function EmployeeNotificationsPage() {
             <CalendarCheck className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">Received Today</p>
+            <p className="text-xs font-semibold text-text-muted">Today&apos;s Updates</p>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{todayCount}</h4>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-red-50 text-red-650 dark:bg-red-955/20 dark:text-red-400">
-            <AlertTriangle className="h-6 w-6" />
+          <div className="p-3 rounded-lg bg-purple-50 text-purple-650 dark:bg-purple-955/20 dark:text-purple-400">
+            <FileText className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">System Messages</p>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{systemCount}</h4>
+            <p className="text-xs font-semibold text-text-muted">Documents Received</p>
+            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{documentsCount}</h4>
           </div>
         </Card>
 
@@ -191,15 +198,15 @@ export default function EmployeeNotificationsPage() {
             <Info className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">High Priority</p>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{priorityHighCount}</h4>
+            <p className="text-xs font-semibold text-text-muted">Pending Actions</p>
+            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{pendingActionsCount}</h4>
           </div>
         </Card>
       </div>
 
       {/* Filter Row Tabs */}
       <div className="flex flex-wrap gap-2 border-b border-border-app pb-2">
-        {(['All', 'Unread', 'Leave', 'Attendance', 'Payroll', 'Documents', 'System'] as const).map((cat) => (
+        {(['All', 'Unread', 'Leave', 'Attendance', 'Payroll', 'Documents', 'Announcements', 'System'] as const).map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}
