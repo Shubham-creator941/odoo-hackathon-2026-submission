@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Bell,
   Info,
@@ -19,11 +19,10 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
 import { mockNotifications, type NotificationItem } from '@/features/notification/mock/notifications'
 
-export default function Notifications() {
-  const location = useLocation()
-  const isAdmin = location.pathname.startsWith('/admin')
-  const baseRoute = isAdmin ? '/admin' : '/employee'
-
+export default function EmployeeNotificationsPage() {
+  const baseRoute = '/employee'
+  
+  // Filter out any notification that's admin-only (e.g. system anomalies or payroll updates if we want, or keep it, but make sure they route to employee paths)
   const [notifications, setNotifications] = useState<NotificationItem[]>(mockNotifications)
   const [filter, setFilter] = useState<'All' | 'Unread' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents' | 'System'>('All')
 
@@ -104,7 +103,7 @@ export default function Notifications() {
     toast.error('Notification deleted')
   }
 
-  // Route calculation based on category
+  // Route calculation based on category (pointing only to employee portal)
   const getActionLink = (category: string) => {
     switch (category) {
       case 'Leave':
@@ -124,16 +123,16 @@ export default function Notifications() {
   const getActionLabel = (category: string) => {
     switch (category) {
       case 'Leave':
-        return 'View Leave Request'
+        return 'View My Leaves'
       case 'Attendance':
-        return 'View Attendance'
+        return 'View My Attendance'
       case 'Payroll':
-        return 'View Payroll'
+        return 'View My Payslip'
       case 'Documents':
-        return 'Open Document'
+        return 'Open My Documents'
       case 'System':
       default:
-        return 'View Dashboard'
+        return 'View My Dashboard'
     }
   }
 
@@ -141,8 +140,8 @@ export default function Notifications() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <SectionHeader
-          title={isAdmin ? "Notification Center (Admin)" : "My Notifications (Employee)"}
-          description="Track incoming alerts, updates, and organizational notifications for leave request status, payroll runs, and check-in history logs."
+          title="My Notifications"
+          description="View updates, alerts, and feedback on leave approvals, payroll, or uploaded personal documents."
         />
         {unreadCount > 0 && (
           <Button
@@ -168,7 +167,7 @@ export default function Notifications() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400">
+          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-955/20 dark:text-green-400">
             <CalendarCheck className="h-6 w-6" />
           </div>
           <div>
@@ -178,17 +177,17 @@ export default function Notifications() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+          <div className="p-3 rounded-lg bg-red-50 text-red-650 dark:bg-red-955/20 dark:text-red-400">
             <AlertTriangle className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">System Alerts</p>
+            <p className="text-xs font-semibold text-text-muted">System Messages</p>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{systemCount}</h4>
           </div>
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
+          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-955/20 dark:text-blue-400">
             <Info className="h-6 w-6" />
           </div>
           <div>
@@ -198,7 +197,7 @@ export default function Notifications() {
         </Card>
       </div>
 
-      {/* Filter Row Tabs - Ordered: All, Unread, Leave, Attendance, Payroll, Documents, System */}
+      {/* Filter Row Tabs */}
       <div className="flex flex-wrap gap-2 border-b border-border-app pb-2">
         {(['All', 'Unread', 'Leave', 'Attendance', 'Payroll', 'Documents', 'System'] as const).map((cat) => (
           <button
@@ -239,7 +238,6 @@ export default function Notifications() {
                     : 'bg-card-app'
                 }`}
               >
-                {/* Unread dot indicator */}
                 {!item.read && (
                   <span className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-blue-600" />
                 )}
@@ -263,7 +261,6 @@ export default function Notifications() {
                   <div className="flex items-center gap-4 mt-3">
                     <p className="text-[11px] text-text-muted font-medium">{item.timestamp}</p>
                     
-                    {/* Informational Clickable Activity Item Action */}
                     <Link
                       to={getActionLink(item.category)}
                       onClick={() => handleMarkAsRead(item.id)}

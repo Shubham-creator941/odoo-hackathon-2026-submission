@@ -69,7 +69,7 @@ export default function EmployeeDashboardPage() {
               Ready to start your day?
             </h2>
             <p className="text-sm text-text-muted mt-1">
-              {user?.designation ?? 'Employee'} · {user?.employeeId}
+              Employee · {user?.employeeId}
             </p>
           </div>
           <Link to={ROUTES.EMPLOYEE.ATTENDANCE}>

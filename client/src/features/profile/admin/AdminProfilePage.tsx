@@ -8,7 +8,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
 import { mockProfile } from '@/features/employee/mock/profile'
 
-export default function Profile() {
+export default function AdminProfilePage() {
   const [activeTab, setActiveTab] = useState<'profile' | 'role' | 'permissions' | 'security' | 'account'>('profile')
 
   // Password reset mock states
@@ -51,7 +51,7 @@ export default function Profile() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'profile' | 'role' | 'permissions' | 'security' | 'account')}
                 className={`w-full flex items-center gap-3 px-4 py-3 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
@@ -191,7 +191,7 @@ export default function Profile() {
                       type="password"
                       placeholder="••••••••"
                       value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       required
                     />
                   </div>

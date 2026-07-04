@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { loginSchema, type LoginInput } from '../schemas/login.schema'
-import { login } from '../services/auth.api'
 import FormField from '@/components/ui/FormField'
 import Input from '@/components/ui/Input'
 import PasswordInput from '@/components/ui/PasswordInput'
@@ -11,32 +11,40 @@ import Checkbox from '@/components/ui/Checkbox'
 import Button from '@/components/ui/Button'
 import { useAuth } from '@/context/AuthContext'
 import { ROUTES } from '@/utils/routes'
+import { cn } from '@/utils'
 
 export default function LoginForm() {
   const navigate = useNavigate()
   const { loginAs } = useAuth()
+  const [selectedRole, setSelectedRole] = useState<'admin' | 'employee'>('admin')
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'admin@company.com',
+      password: 'password123',
       rememberMe: false,
     },
   })
 
-  const onSubmit = async (data: LoginInput) => {
+  const onSubmit = async () => {
     try {
-      const response = await login(data)
-      loginAs(response.user.role)
-      toast.success(`Welcome back, ${response.user.fullName}!`, {
-        description: 'Successfully authenticated.',
-      })
+      loginAs(selectedRole)
+      toast.success(
+        selectedRole === 'admin' ? 'Welcome, Admin!' : 'Welcome back!',
+        {
+          description: selectedRole === 'admin'
+            ? 'Signed in to the Admin Portal.'
+            : 'Signed in to the Employee Portal.',
+        }
+      )
       navigate(
-        response.user.role === 'admin'
+        selectedRole === 'admin'
           ? ROUTES.ADMIN.DASHBOARD
           : ROUTES.EMPLOYEE.DASHBOARD
       )
@@ -46,7 +54,65 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      {/* Styled Radio Role Selector */}
+      <div className="space-y-2">
+        <label className="block text-xs font-bold uppercase tracking-wider text-text-muted">
+          Select Portal Mode
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          <label
+            className={cn(
+              "flex flex-col gap-1 rounded-xl border p-3.5 cursor-pointer transition-all duration-200 hover:border-indigo-500/50",
+              selectedRole === 'admin'
+                ? "border-indigo-650 bg-indigo-50/25 dark:border-indigo-500 dark:bg-indigo-950/20 text-indigo-750 dark:text-indigo-400"
+                : "border-border-app bg-card-app text-text-muted"
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold">Admin</span>
+              <input
+                type="radio"
+                name="role-selector"
+                value="admin"
+                checked={selectedRole === 'admin'}
+                onChange={() => {
+                  setSelectedRole('admin')
+                  setValue('email', 'admin@company.com')
+                }}
+                className="accent-indigo-650 dark:accent-indigo-500 h-4 w-4"
+              />
+            </div>
+            <span className="text-[10px] text-text-muted leading-tight">HR Operations</span>
+          </label>
+
+          <label
+            className={cn(
+              "flex flex-col gap-1 rounded-xl border p-3.5 cursor-pointer transition-all duration-200 hover:border-indigo-500/50",
+              selectedRole === 'employee'
+                ? "border-indigo-650 bg-indigo-50/25 dark:border-indigo-500 dark:bg-indigo-950/20 text-indigo-750 dark:text-indigo-400"
+                : "border-border-app bg-card-app text-text-muted"
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold">Employee</span>
+              <input
+                type="radio"
+                name="role-selector"
+                value="employee"
+                checked={selectedRole === 'employee'}
+                onChange={() => {
+                  setSelectedRole('employee')
+                  setValue('email', 'jane.smith@company.com')
+                }}
+                className="accent-indigo-650 dark:accent-indigo-500 h-4 w-4"
+              />
+            </div>
+            <span className="text-[10px] text-text-muted leading-tight">My Workspace</span>
+          </label>
+        </div>
+      </div>
+
       <FormField label="Email Address" error={errors.email?.message} required>
         <Input
           type="email"
@@ -79,7 +145,7 @@ export default function LoginForm() {
       </div>
 
       <Button type="submit" fullWidth isLoading={isSubmitting}>
-        Sign In
+        Sign In to Portal
       </Button>
 
       <div className="text-center text-sm text-slate-500 dark:text-slate-400">
@@ -91,3 +157,4 @@ export default function LoginForm() {
     </form>
   )
 }
+

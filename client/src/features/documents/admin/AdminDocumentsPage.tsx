@@ -9,7 +9,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import { toast } from 'sonner'
 import { mockDocuments, type DocumentItem } from '@/features/document/mock/documents'
 
-export default function Documents() {
+export default function AdminDocumentsPage() {
   const [documents, setDocuments] = useState<DocumentItem[]>(mockDocuments)
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('All')
@@ -107,7 +107,7 @@ export default function Documents() {
       {/* Summary Cards Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
+          <div className="p-3 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-955/30 dark:text-blue-400">
             <FileText className="h-6 w-6" />
           </div>
           <div>
@@ -117,7 +117,7 @@ export default function Documents() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
+          <div className="p-3 rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-955/30 dark:text-amber-400">
             <Clock className="h-6 w-6" />
           </div>
           <div>
@@ -127,7 +127,7 @@ export default function Documents() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
+          <div className="p-3 rounded-lg bg-red-50 text-red-600 dark:bg-red-955/30 dark:text-red-400">
             <ShieldAlert className="h-6 w-6" />
           </div>
           <div>
@@ -137,7 +137,7 @@ export default function Documents() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400">
+          <div className="p-3 rounded-lg bg-green-50 text-green-600 dark:bg-green-955/30 dark:text-green-400">
             <CheckCircle className="h-6 w-6" />
           </div>
           <div>
@@ -347,7 +347,7 @@ export default function Documents() {
                   <Button
                     onClick={() => handleReject(selectedDoc.id)}
                     variant="danger"
-                    className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold"
+                    className="bg-red-650 hover:bg-red-700 text-white text-xs font-bold"
                   >
                     Reject
                   </Button>

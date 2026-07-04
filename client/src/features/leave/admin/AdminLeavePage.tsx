@@ -19,7 +19,6 @@ import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
-import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import Pagination from '@/components/ui/Pagination'
 import StatusBadge from '@/components/ui/StatusBadge'
@@ -29,7 +28,7 @@ import Avatar from '@/components/ui/Avatar'
 import { getLeaves, approveLeave, rejectLeave } from '../services/leave.api'
 import type { LeaveRequest } from '../types'
 
-export default function LeavePage() {
+export default function AdminLeavePage() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
 
@@ -51,20 +50,27 @@ export default function LeavePage() {
   const [isDetailOpen, setIsDetailOpen] = useState(false)
   const [managerComments, setManagerComments] = useState('')
 
-  async function loadData() {
-    setIsLoading(true)
-    try {
-      const data = await getLeaves()
-      setLeaves([...data])
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   useEffect(() => {
+    let active = true
+    async function loadData() {
+      setIsLoading(true)
+      try {
+        const data = await getLeaves()
+        if (active) {
+          setLeaves([...data])
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (active) {
+          setIsLoading(false)
+        }
+      }
+    }
     loadData()
+    return () => {
+      active = false
+    }
   }, [])
 
   const handleApprove = async (id: string) => {
@@ -164,7 +170,7 @@ export default function LeavePage() {
   return (
     <div className="space-y-6">
       <SectionHeader
-        title="Leave Management (Admin Portal)"
+        title="Leave Management"
         description="Verify pending leaves requests, approve/reject applications, and monitor team availability logs."
       />
 
@@ -185,7 +191,7 @@ export default function LeavePage() {
             <CheckSquare className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">Approved Requests</p>
+            <p className="text-xs font-semibold text-text-muted">Approved Today</p>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{approvedCount}</h4>
           </div>
         </Card>
@@ -195,7 +201,7 @@ export default function LeavePage() {
             <XSquare className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">Rejected Requests</p>
+            <p className="text-xs font-semibold text-text-muted">Rejected Today</p>
             <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{rejectedCount}</h4>
           </div>
         </Card>
@@ -205,8 +211,8 @@ export default function LeavePage() {
             <Users className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-text-muted">On Leave Today</p>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{onLeaveCount} Employees</h4>
+            <p className="text-xs font-semibold text-text-muted">Employees On Leave</p>
+            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{onLeaveCount}</h4>
           </div>
         </Card>
       </div>
@@ -242,7 +248,7 @@ export default function LeavePage() {
 
         <Card className="md:col-span-1 flex flex-col justify-between">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Monthly Leave Trend</h3>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Monthly Requests</h3>
             <p className="text-xs text-text-muted mb-4">Total requests logged over time</p>
           </div>
           <div className="h-44 w-full">
@@ -526,7 +532,7 @@ export default function LeavePage() {
                   <Button
                     onClick={() => handleReject(selectedRequest.id)}
                     variant="danger"
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold"
+                    className="bg-red-650 hover:bg-red-700 text-white font-bold"
                   >
                     Reject Request
                   </Button>
