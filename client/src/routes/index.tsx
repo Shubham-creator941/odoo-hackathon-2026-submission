@@ -8,10 +8,14 @@ import EmployeeLayout from '@/layouts/EmployeeLayout'
 // Pages
 import Login from '@/features/auth/pages/LoginPage'
 import Register from '@/features/auth/pages/RegisterPage'
-import Dashboard from '@/pages/Dashboard'
-import Employees from '@/pages/Employees'
-import Attendance from '@/pages/Attendance'
-import Leave from '@/pages/Leave'
+import DashboardPage from '@/features/dashboard/pages/DashboardPage'
+import EmployeeListPage from '@/features/employee/pages/EmployeeListPage'
+import EmployeeDetailsPage from '@/features/employee/pages/EmployeeDetailsPage'
+import EmployeeFormPage from '@/features/employee/pages/EmployeeFormPage'
+import AttendancePage from '@/features/attendance/pages/AttendancePage'
+import LeavePage from '@/features/leave/pages/LeavePage'
+import ApplyLeavePage from '@/features/leave/pages/ApplyLeavePage'
+
 import Payroll from '@/pages/Payroll'
 import Documents from '@/pages/Documents'
 import Notifications from '@/pages/Notifications'
@@ -47,19 +51,45 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <DashboardPage />,
       },
       {
         path: 'employees',
-        element: <Employees />,
+        children: [
+          {
+            path: '',
+            element: <EmployeeListPage />,
+          },
+          {
+            path: 'new',
+            element: <EmployeeFormPage />,
+          },
+          {
+            path: ':id',
+            element: <EmployeeDetailsPage />,
+          },
+          {
+            path: ':id/edit',
+            element: <EmployeeFormPage />,
+          },
+        ],
       },
       {
         path: 'attendance',
-        element: <Attendance />,
+        element: <AttendancePage />,
       },
       {
         path: 'leave',
-        element: <Leave />,
+        children: [
+          {
+            path: '',
+            element: <LeavePage />,
+          },
+          {
+            path: 'apply',
+            element: <ApplyLeavePage />,
+          },
+        ],
       },
       {
         path: 'payroll',
@@ -89,15 +119,24 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <DashboardPage />,
       },
       {
         path: 'attendance',
-        element: <Attendance />,
+        element: <AttendancePage />,
       },
       {
         path: 'leave',
-        element: <Leave />,
+        children: [
+          {
+            path: '',
+            element: <LeavePage />,
+          },
+          {
+            path: 'apply',
+            element: <ApplyLeavePage />,
+          },
+        ],
       },
       {
         path: 'payroll',

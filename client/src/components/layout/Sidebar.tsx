@@ -10,6 +10,7 @@ import {
   User,
   X,
 } from 'lucide-react'
+import { ROUTES } from '@/utils/routes'
 
 interface SidebarProps {
   type: 'admin' | 'employee'
@@ -19,10 +20,10 @@ interface SidebarProps {
 
 export default function Sidebar({ type, isOpen, onClose }: SidebarProps) {
   const adminMenuItems = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Employees', path: '/admin/employees', icon: Users },
-    { name: 'Attendance', path: '/admin/attendance', icon: CalendarCheck },
-    { name: 'Leave', path: '/admin/leave', icon: CalendarX },
+    { name: 'Dashboard', path: ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
+    { name: 'Employees', path: ROUTES.ADMIN.EMPLOYEES, icon: Users },
+    { name: 'Attendance', path: ROUTES.ADMIN.ATTENDANCE, icon: CalendarCheck },
+    { name: 'Leave', path: ROUTES.ADMIN.LEAVE, icon: CalendarX },
     { name: 'Payroll', path: '/admin/payroll', icon: DollarSign },
     { name: 'Documents', path: '/admin/documents', icon: FileText },
     { name: 'Notifications', path: '/admin/notifications', icon: Bell },
@@ -30,9 +31,9 @@ export default function Sidebar({ type, isOpen, onClose }: SidebarProps) {
   ]
 
   const employeeMenuItems = [
-    { name: 'Dashboard', path: '/employee/dashboard', icon: LayoutDashboard },
-    { name: 'Attendance', path: '/employee/attendance', icon: CalendarCheck },
-    { name: 'Leave', path: '/employee/leave', icon: CalendarX },
+    { name: 'Dashboard', path: ROUTES.EMPLOYEE.DASHBOARD, icon: LayoutDashboard },
+    { name: 'Attendance', path: ROUTES.EMPLOYEE.ATTENDANCE, icon: CalendarCheck },
+    { name: 'Leave', path: ROUTES.EMPLOYEE.LEAVE, icon: CalendarX },
     { name: 'Payroll', path: '/employee/payroll', icon: DollarSign },
     { name: 'Documents', path: '/employee/documents', icon: FileText },
     { name: 'Notifications', path: '/employee/notifications', icon: Bell },
