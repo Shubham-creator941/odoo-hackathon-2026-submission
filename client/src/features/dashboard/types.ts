@@ -5,14 +5,16 @@ export interface SummaryMetric {
   trendValue: string
   trendType: 'up' | 'down' | 'neutral'
   description: string
+  link?: string
 }
 
 export interface RecentActivity {
   id: string
-  type: 'employee' | 'leave' | 'attendance' | 'payroll'
+  type: 'employee' | 'leave' | 'attendance' | 'payroll' | 'document'
   title: string
   timestamp: string
   description: string
+  link?: string
 }
 
 export interface QuickActionItem {
@@ -45,4 +47,3 @@ export interface AttendanceRate {
   day: string
   rate: number
 }
-

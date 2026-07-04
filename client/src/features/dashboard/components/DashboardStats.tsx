@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { SummaryMetric } from '../types'
 import { Users, CalendarCheck, CalendarX, DollarSign, type LucideIcon } from 'lucide-react'
 import StatCard from '@/components/ui/StatCard'
@@ -29,9 +30,8 @@ export default function DashboardStats({ metrics, isLoading }: DashboardStatsPro
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {metrics.map((metric, idx) => {
         const Icon = iconMap[metric.icon] || Users
-        return (
+        const cardContent = (
           <StatCard
-            key={idx}
             title={metric.title}
             value={metric.value}
             icon={Icon}
@@ -40,7 +40,16 @@ export default function DashboardStats({ metrics, isLoading }: DashboardStatsPro
               type: metric.trendType,
             }}
             description={metric.description}
+            className="h-full"
           />
+        )
+
+        return metric.link ? (
+          <Link key={idx} to={metric.link} className="block transition-transform hover:scale-101">
+            {cardContent}
+          </Link>
+        ) : (
+          <div key={idx}>{cardContent}</div>
         )
       })}
     </div>

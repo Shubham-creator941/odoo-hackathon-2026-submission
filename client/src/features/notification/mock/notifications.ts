@@ -3,7 +3,7 @@ export interface NotificationItem {
   title: string
   message: string
   timestamp: string
-  category: 'System' | 'Leave' | 'Attendance' | 'Payroll'
+  category: 'System' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents'
   priority: 'High' | 'Medium' | 'Low'
   read: boolean
 }
@@ -21,7 +21,7 @@ export const mockNotifications: NotificationItem[] = [
   {
     id: '2',
     title: 'New Leave Request Submitted',
-    message: 'Alice Williams has applied for 3 days of Annual Leave. Approval is required.',
+    message: 'Alice Johnson has applied for 3 days of Annual Leave. Approval is required.',
     timestamp: 'Today, 08:15 AM',
     category: 'Leave',
     priority: 'Medium',
@@ -53,5 +53,14 @@ export const mockNotifications: NotificationItem[] = [
     category: 'System',
     priority: 'Low',
     read: true,
+  },
+  {
+    id: '6',
+    title: 'W-4 Tax Form Uploaded',
+    message: 'Jane Smith uploaded W-4 Form Tax Info document for verification.',
+    timestamp: 'Today, 11:00 AM',
+    category: 'Documents',
+    priority: 'Low',
+    read: false,
   },
 ]

@@ -1,5 +1,17 @@
 import { useState } from 'react'
-import { Bell, Info, AlertTriangle, DollarSign, CalendarCheck, CalendarX, Check, Trash2 } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import {
+  Bell,
+  Info,
+  AlertTriangle,
+  DollarSign,
+  CalendarCheck,
+  CalendarX,
+  FileText,
+  Check,
+  Trash2,
+  ArrowRight
+} from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
@@ -8,8 +20,12 @@ import { toast } from 'sonner'
 import { mockNotifications, type NotificationItem } from '@/features/notification/mock/notifications'
 
 export default function Notifications() {
+  const location = useLocation()
+  const isAdmin = location.pathname.startsWith('/admin')
+  const baseRoute = isAdmin ? '/admin' : '/employee'
+
   const [notifications, setNotifications] = useState<NotificationItem[]>(mockNotifications)
-  const [filter, setFilter] = useState<'All' | 'Unread' | 'System' | 'Leave' | 'Attendance' | 'Payroll'>('All')
+  const [filter, setFilter] = useState<'All' | 'Unread' | 'Leave' | 'Attendance' | 'Payroll' | 'Documents' | 'System'>('All')
 
   // Stats derivation
   const unreadCount = notifications.filter((n) => !n.read).length
@@ -34,6 +50,8 @@ export default function Notifications() {
         return CalendarCheck
       case 'Payroll':
         return DollarSign
+      case 'Documents':
+        return FileText
       default:
         return Bell
     }
@@ -42,13 +60,15 @@ export default function Notifications() {
   const getCategoryStyles = (category: string) => {
     switch (category) {
       case 'System':
-        return 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-950/20'
+        return 'text-red-655 bg-red-50 dark:text-red-400 dark:bg-red-955/20'
       case 'Leave':
-        return 'text-indigo-650 bg-indigo-50 dark:text-indigo-400 dark:bg-indigo-950/20'
+        return 'text-indigo-650 bg-indigo-50 dark:text-indigo-400 dark:bg-indigo-955/20'
       case 'Attendance':
-        return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-950/20'
+        return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-955/20'
       case 'Payroll':
-        return 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-950/20'
+        return 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-955/20'
+      case 'Documents':
+        return 'text-purple-600 bg-purple-50 dark:text-purple-400 dark:bg-purple-955/20'
       default:
         return 'text-slate-600 bg-slate-50 dark:text-slate-400 dark:bg-slate-800/40'
     }
@@ -84,12 +104,45 @@ export default function Notifications() {
     toast.error('Notification deleted')
   }
 
+  // Route calculation based on category
+  const getActionLink = (category: string) => {
+    switch (category) {
+      case 'Leave':
+        return `${baseRoute}/leave`
+      case 'Attendance':
+        return `${baseRoute}/attendance`
+      case 'Payroll':
+        return `${baseRoute}/payroll`
+      case 'Documents':
+        return `${baseRoute}/documents`
+      case 'System':
+      default:
+        return `${baseRoute}/dashboard`
+    }
+  }
+
+  const getActionLabel = (category: string) => {
+    switch (category) {
+      case 'Leave':
+        return 'View Leave Request'
+      case 'Attendance':
+        return 'View Attendance'
+      case 'Payroll':
+        return 'View Payroll'
+      case 'Documents':
+        return 'Open Document'
+      case 'System':
+      default:
+        return 'View Dashboard'
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <SectionHeader
-          title="Notification Center"
-          description="View alerts, updates, and organizational notifications for leave request approvals, attendance schedules, and payroll timelines"
+          title={isAdmin ? "Notification Center (Admin)" : "My Notifications (Employee)"}
+          description="Track incoming alerts, updates, and organizational notifications for leave request status, payroll runs, and check-in history logs."
         />
         {unreadCount > 0 && (
           <Button
@@ -145,13 +198,13 @@ export default function Notifications() {
         </Card>
       </div>
 
-      {/* Filter Row Tabs */}
+      {/* Filter Row Tabs - Ordered: All, Unread, Leave, Attendance, Payroll, Documents, System */}
       <div className="flex flex-wrap gap-2 border-b border-border-app pb-2">
-        {(['All', 'Unread', 'System', 'Leave', 'Attendance', 'Payroll'] as const).map((cat) => (
+        {(['All', 'Unread', 'Leave', 'Attendance', 'Payroll', 'Documents', 'System'] as const).map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
               filter === cat
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-text-muted hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-850 dark:hover:text-slate-200'
@@ -182,11 +235,11 @@ export default function Notifications() {
                 key={item.id}
                 className={`flex gap-4 p-5 items-start transition-all duration-150 relative ${
                   !item.read
-                    ? 'bg-blue-50/20 dark:bg-blue-950/10'
+                    ? 'bg-blue-50/25 dark:bg-blue-955/10'
                     : 'bg-card-app'
                 }`}
               >
-                {/* Unread blue dot indicator */}
+                {/* Unread dot indicator */}
                 {!item.read && (
                   <span className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-blue-600" />
                 )}
@@ -206,15 +259,27 @@ export default function Notifications() {
                     </div>
                   </div>
                   <p className="text-xs text-text-muted mt-1.5 leading-relaxed">{item.message}</p>
-                  <p className="text-[11px] text-text-muted mt-2 font-medium">{item.timestamp}</p>
+                  
+                  <div className="flex items-center gap-4 mt-3">
+                    <p className="text-[11px] text-text-muted font-medium">{item.timestamp}</p>
+                    
+                    {/* Informational Clickable Activity Item Action */}
+                    <Link
+                      to={getActionLink(item.category)}
+                      onClick={() => handleMarkAsRead(item.id)}
+                      className="text-xs font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"
+                    >
+                      {getActionLabel(item.category)} <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </div>
                 </div>
 
-                {/* Inline Action Triggers */}
+                {/* Mark as read & Delete controls */}
                 <div className="flex items-center gap-2 self-center">
                   {!item.read && (
                     <button
                       onClick={() => handleMarkAsRead(item.id)}
-                      className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:hover:bg-slate-800 dark:text-slate-400"
+                      className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:hover:bg-slate-800 dark:text-slate-400 cursor-pointer"
                       title="Mark as read"
                     >
                       <Check className="h-4.5 w-4.5" />
@@ -222,7 +287,7 @@ export default function Notifications() {
                   )}
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="p-1.5 rounded-lg text-slate-550 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
+                    className="p-1.5 rounded-lg text-slate-550 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-955/20 cursor-pointer"
                     title="Delete notification"
                   >
                     <Trash2 className="h-4.5 w-4.5" />

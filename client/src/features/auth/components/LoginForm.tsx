@@ -9,9 +9,12 @@ import Input from '@/components/ui/Input'
 import PasswordInput from '@/components/ui/PasswordInput'
 import Checkbox from '@/components/ui/Checkbox'
 import Button from '@/components/ui/Button'
+import { useAuth } from '@/context/AuthContext'
+import { ROUTES } from '@/utils/routes'
 
 export default function LoginForm() {
   const navigate = useNavigate()
+  const { loginAs } = useAuth()
   const {
     register,
     handleSubmit,
@@ -28,17 +31,17 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginInput) => {
     try {
       const response = await login(data)
+      loginAs(response.user.role)
       toast.success(`Welcome back, ${response.user.fullName}!`, {
         description: 'Successfully authenticated.',
       })
-      if (response.user.role === 'admin') {
-        navigate('/admin/dashboard')
-      } else {
-        navigate('/employee/dashboard')
-      }
-    } catch (err) {
+      navigate(
+        response.user.role === 'admin'
+          ? ROUTES.ADMIN.DASHBOARD
+          : ROUTES.EMPLOYEE.DASHBOARD
+      )
+    } catch {
       toast.error('Authentication failed. Please check your credentials.')
-      console.error(err)
     }
   }
 
